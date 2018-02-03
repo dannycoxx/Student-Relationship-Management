@@ -10,8 +10,6 @@ function loadStudent(studentNo) {
             data: dataToSend,
             dataType : "json",
             success: function (data) {
-                // console.log("RECEIVING:");
-                // console.log(data);
                 searchResultsTable(data);
             },
             error : function (msg) {
