@@ -20,7 +20,7 @@ function login() {
     
             $.ajax({
                 type: 'POST',
-                url : 'http://localhost/public_html/php/login.php',
+                url : 'http://localhost/php/login.php',
                 data: dataToSend,
                 dataType : "json",
                 success: function (data) {

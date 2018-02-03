@@ -54,7 +54,7 @@ function getHelp(page) {
 function logOut() {
     $.ajax({
         type: 'POST',
-        url: 'http://localhost/public_html/php/log_out.php',
+        url: 'http://localhost/php/log_out.php',
         // data: dataToSend,
         dataType: "json",
         success: function (data) {
@@ -74,7 +74,7 @@ function logOut() {
 function getStartData() {
     $.ajax({
         type: 'POST',
-        url: 'http://localhost/public_html/php/start_data.php',
+        url: 'http://localhost/php/start_data.php',
         // data: dataToSend,
         dataType: "json",
         success: function (data) {
