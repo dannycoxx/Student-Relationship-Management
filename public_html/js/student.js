@@ -4,6 +4,9 @@ $(document).ready(function () {
 });
 
 function loadStudent(studentNo) {
+    var dataToSend = {
+            studentNo: studentNo,
+        }
     $.ajax({
             type: 'POST',
             url : 'http://localhost/public_html/php/student_info.php',
