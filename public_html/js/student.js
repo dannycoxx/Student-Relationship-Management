@@ -6,7 +6,7 @@ $(document).ready(function () {
 function loadStudent(studentNo) {
     $.ajax({
             type: 'POST',
-            url : 'http://localhost/php/student_info.php',
+            url : 'http://localhost/public_html/php/student_info.php',
             data: dataToSend,
             dataType : "json",
             success: function (data) {
