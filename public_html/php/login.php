@@ -34,14 +34,13 @@
         $passHash = password_hash($row['mwsPassword'], PASSWORD_DEFAULT);
         //Correct username, correct password
         if (password_verify($passPre, $passHash)) {
-            session_start();
             $data['login'] = 'true';
             $_SESSION['mwsUser'] = $row['mwsUser'];  
             $data['result'] = $row;
             if (!empty($row['staffNo'])) {
-                $_SESSION['accNo'] = $row['staffNo'];
+                $_SESSION['mwsUser'] = $row['staffNo'];
             } else {
-                $_SESSION['accNo'] = $row['studentNo'];
+                $_SESSION['mwsUser'] = $row['studentNo'];
             }
             if (!empty($row['userType'])) {
                 $_SESSION['userType'] = $row['userType'];

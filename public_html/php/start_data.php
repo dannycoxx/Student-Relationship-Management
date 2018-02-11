@@ -1,5 +1,4 @@
 <?php
-    session_start();
     require_once ('../php/db_config.php');
 
     $accNo = $_SESSION['accNo'];
@@ -30,6 +29,5 @@
 
     echo json_encode($data);
     exit();
-
 
 ?>

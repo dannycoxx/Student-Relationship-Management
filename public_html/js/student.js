@@ -1,16 +1,22 @@
-$(document).ready(function () {
+$(document).ready(function () {  
+    var studentNo = 1;            
     loadStudent(studentNo);
-    generateTimetable(dataArray);
 });
 
 function loadStudent(studentNo) {
+
+    var dataToSend = {
+        studentMWS: studentNo
+    }
     $.ajax({
             type: 'POST',
             url : 'http://localhost/public_html/php/student_info.php',
             data: dataToSend,
             dataType : "json",
             success: function (data) {
-                searchResultsTable(data);
+                console.log("STUDENT INFO DATA:")
+                console.log(data);
+                // inputData(data);
             },
             error : function (msg) {
                 console.log("ERROR:");
@@ -18,7 +24,9 @@ function loadStudent(studentNo) {
             }
         });
 }
-
+function inputData(studentData) {
+    generateTitles();
+}
 function generateTimetable(dataArray){
     var rows = 6;           //days shown
     var columns = 10;       //times shown
@@ -39,8 +47,6 @@ function generateTimetable(dataArray){
             } else if (cellCount%10 == 0) {
                 //add index[i] from days
             }
-
-
             cellCount++;
         }
     }

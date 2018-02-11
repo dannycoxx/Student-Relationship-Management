@@ -4,6 +4,7 @@
     // $db_database = "u5dc";
     // $db_username = "u5dc";
     // $db_password = "12-abcd-34";
+    session_start();
 
     $db_hostname = "localhost";
     $db_database = "srm";
