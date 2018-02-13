@@ -1,7 +1,7 @@
 function sendSearch(textBox){
     if (searchTerm != "") {
         var searchTerm = textBox.value;
-        console.log("Change: "+searchTerm);
+        // console.log("Change: "+searchTerm);
         var dataToSend = {
             searchTerm: textBox.value
             // searchTerm : "DA"
@@ -27,8 +27,8 @@ function sendSearch(textBox){
 }
 
 function searchResultsTable(studentData) {
-    console.log("SEARCH RESULTS TABLE:");
-    console.log(studentData);
+    // console.log("SEARCH RESULTS TABLE:");
+    // console.log(studentData);
     var table = "<table  class=\"studentResultTable\">";
     
     if (studentData == "FALSE") {
@@ -53,7 +53,7 @@ function searchResultsTable(studentData) {
 }
 
 function getStudent(row) {
-    console.log(row);
+    // console.log(row);
     $("#main").load("student.html");
     //call 
 }

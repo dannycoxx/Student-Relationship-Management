@@ -35,8 +35,8 @@ function toggleNav(nav) {
 
 function loadContent(page) {
     currentPage = page;
-    console.log("PAGE: ")
-    console.log(currentPage);
+    // console.log("PAGE: ")
+    // console.log(currentPage);
     $("#main").load(page + ".html");
     
 }
@@ -58,7 +58,7 @@ function logOut() {
         // data: dataToSend,
         dataType: "json",
         success: function (data) {
-            console.log("RECEIVING:");
+            // console.log("RECEIVING:");
             // console.log(data);
             window.location.replace("index.html");
             //or just redirect to log_out.html
@@ -78,8 +78,8 @@ function getStartData() {
         // data: dataToSend,
         dataType: "json",
         success: function (data) {
-            console.log("RECEIVING:");
-            console.log(data);
+            // console.log("RECEIVING:");
+            // console.log(data);
             document.getElementById('mwsUsername').innerHTML = data['mwsUser'];
         },
         error: function (msg) {

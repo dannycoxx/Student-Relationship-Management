@@ -1,13 +1,13 @@
 <?php
     require_once ('../php/db_config.php');
 
-    $accNo = $_SESSION['accNo'];
+    $mwsUser = $_SESSION['mwsUser'];
     $userType = $_SESSION['userType'];
 
     if ($userType == 'S') {
-        $query = "SELECT studentNo, mwsUser from student where studentNo = $accNo";
+        $query = "SELECT studentNo, mwsUser from student where studentNo = $mwsUser";
     } else if ($userType == 'OA' || $userType == 'SA' || $userType == 'L') {
-        $query = "SELECT staffNo, mwsUser from staff where staffNo = $accNo";
+        $query = "SELECT staffNo, mwsUser from staff where staffNo = $mwsUser";
     } else {
         //remove when get acc info works
         exit();
@@ -19,7 +19,7 @@
         $data['valid'] = 'true';
         $data['mwsUser'] = $row['mwsUser'];
     } else {
-        //couldn't find accNo in DB
+        //couldn't find mwsUser in DB
         $data['valid'] = 'false';
     }
        
