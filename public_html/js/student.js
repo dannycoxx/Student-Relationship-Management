@@ -1,5 +1,5 @@
 $(document).ready(function () {  
-    var studentMWS = "sgdjones2";            
+    var studentMWS = "sgdjones2"; 
     loadStudent(studentMWS);
 });
 
