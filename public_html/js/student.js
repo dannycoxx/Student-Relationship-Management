@@ -4,7 +4,6 @@ $(document).ready(function () {
 });
 
 function loadStudent(studentMWS) {
-    system.log("studentMWS: "+studentMWS);
     var dataToSend = {
         studentMWS : studentMWS
     }
@@ -16,7 +15,6 @@ function loadStudent(studentMWS) {
             success: function (data) {
                 console.log("STUDENT INFO DATA:")
                 console.log(data);
-                // inputData(data);
             },
             error : function (msg) {
                 console.log("ERROR:");
