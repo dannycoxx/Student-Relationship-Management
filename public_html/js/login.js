@@ -13,11 +13,7 @@ function login() {
             username: username,
             password: password
         }
-        // console.log(dataToSend);
-        // console.log("SENDING: ");
-        // console.log(username);
-        // console.log(password);
-    
+
             $.ajax({
                 type: 'POST',
                 url : 'http://localhost/public_html/php/login.php',

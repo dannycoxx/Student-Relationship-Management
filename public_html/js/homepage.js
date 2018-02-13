@@ -10,7 +10,7 @@ function sendSearch(textBox){
 
         $.ajax({
             type: 'POST',
-            url : 'http://localhost/public_html/php/search_student.php',
+            url : 'http://localhost//public_htmlphp/search_student.php',
             data: dataToSend,
             dataType : "json",
             success: function (data) {
