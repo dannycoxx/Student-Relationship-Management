@@ -1,9 +1,13 @@
+/////////////////// DATABASE ///////////////////
 - changed length of password fields in staff and student - 25 -> 70
 		-Using hashing algorithm to store passwords instead of plaintext
-
 - Added fields to Request table
 		- student
 		- datetime
 		- status allowed to be null
 - Added fields to Student table
 		- userType
+
+/////////////////// SYSTEM ///////////////////
+- Redesigned log in page
+- homepage now has live search for students if logged in as non-student and goes stright to student profile if logged in as a student.
