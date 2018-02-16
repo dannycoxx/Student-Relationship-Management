@@ -9,17 +9,11 @@
         $studentMws = $requesterMws;
     }
 
-    // delete (TEST)
-    // $studentMws = 'sgdjones2';
-    // $requesterUserType = 'S';
-    // $requesterMws = 1;
-    // getPersonalInformation($studentMws, $db_con);
-
 
     $data = array();
     //Student is accessing their own information
     if ($requesterUserType == "S") {
-        getPersonalInformation($studentMws, $db_con);
+        $data['personalInfo'] = getPersonalInformation($studentMws, $db_con);
         // getTimetable();
         // getMarks();
         // getAttendance();
@@ -35,34 +29,28 @@
     } else {
         
     }
+
+    echo json_encode($data);
+    mysqli_close($db_con);
+    exit();
     
     function getPersonalInformation($studentMws, $db_con) {
         $query = "SELECT studentNo, forename, surname, mwsUser, csdUser, 
             email, prefEmail, permAddress, termAddress, phone, termPhone, 
             advisor, degreeCode, yearStudy, admitYear FROM student WHERE
-            mwsUser = 'sgdjones2'";
+            mwsUser = '$studentMws'";
 
         $result = mysqli_query($db_con, $query); 
 
         if (mysqli_num_rows($result) > 0) {
-            // echo "result2: ";
-            // var_dump($result);
-            //MAKE INTO GLOBAL ARRAY
-            $data['personalInfo'] = mysqli_fetch_assoc($result);   
-            // $data['personalInfo'] = "result";   
-            
+            $data['personalInfo'] = mysqli_fetch_assoc($result);               
         } else {
             $data['personalInfo'] = "FALSE";
         }
-
+        return $data['personalInfo'];
         mysqli_free_result($result);
     }
     
-    ////////////////////MOVE//////////////////////
-    echo json_encode($data);
-    mysqli_close($db_con);
-    exit();
-    ////////////////////MOVE//////////////////////
     /*
     function getTimetable() {
         //get modules student registered on
