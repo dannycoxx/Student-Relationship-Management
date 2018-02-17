@@ -1,5 +1,5 @@
 <?php
-    include ('../php/db_config.php');
+    require_once ('../php/db_config.php');
 
     
     $studentMws = $_POST['studentMWS'];
@@ -14,9 +14,10 @@
     //Student is accessing their own information
     if ($requesterUserType == "S") {
         $data['personalInfo'] = getPersonalInformation($studentMws, $db_con);
-        // getTimetable();
-        // getMarks();
-        // getAttendance();
+        $data['personalInfo'] = getTimetable($studentMws, $db_con);
+        // $data['personalInfo'] = getMarks($studentMws, $db_con);
+        // $data['personalInfo'] = getAttendance($studentMws, $db_con);
+
         //lecturer requesting information
     } else if ($requesterUserType == "L") {
         
@@ -51,16 +52,15 @@
         mysqli_free_result($result);
     }
     
-    /*
     function getTimetable() {
         //get modules student registered on
         //get sessions for module
         //create table with session data
         //Table contains all lots of session dada
 
-        $query = "SELECT studentNo, forename, surname, mwsUser, csdUser, 
-            email, prefEmail, permAddress, termAddress, phone, termPhone, 
-            advisor, degreeCode, yearStudy, admitYear FROM student WHERE
+        SELECT * FROM session where session.moduleCode = (SELECT registration.moduleCode FROM registration JOIN student WHERE registration.studentNo = student.studentNo); 
+        
+        $query = "SELECT  FROM student WHERE
             mwsUser = '$studentMws'";
 
         if (mysqli_num_rows($result) > 0) {
@@ -71,6 +71,7 @@
         }
         mysqli_free_result($result);
     }
+/*
     function getMeetingNotes() {
         $studentData['meetingNotes'] = $result;
         mysqli_free_result($result);
