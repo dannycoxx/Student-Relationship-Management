@@ -38,9 +38,9 @@
             $_SESSION['mwsUser'] = $row['mwsUser'];  
             $data['result'] = $row;
             if (!empty($row['staffNo'])) {
-                $_SESSION['mwsUser'] = $row['staffNo'];
+                $_SESSION['mwsUser'] = $row['mwsUser'];
             } else {
-                $_SESSION['mwsUser'] = $row['studentNo'];
+                $_SESSION['mwsUser'] = $row['mwsUser'];
             }
             if (!empty($row['userType'])) {
                 $_SESSION['userType'] = $row['userType'];
