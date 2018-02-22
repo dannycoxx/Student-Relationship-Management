@@ -5,7 +5,7 @@ var currentPage;
 $(document)
     .ready(function () {
         $("#main").load("homepage.html");
-        getStartData();
+        initialiseNavDrawer();
 });
 
 /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
@@ -71,16 +71,42 @@ function logOut() {
     });
 }
 
-function getStartData() {
+function initialiseNavDrawer() {
     $.ajax({
         type: 'POST',
         url: 'http://localhost/public_html/php/start_data.php',
         // data: dataToSend,
         dataType: "json",
         success: function (data) {
-            // console.log("RECEIVING:");
-            // console.log(data);
             document.getElementById('mwsUsername').innerHTML = data['mwsUser'];
+            switch (data['userType']) {
+                //On login if student, load student page by default
+                case 'OA': 
+                    $("#parent").append(
+                        `<div class="navCategory" onclick="loadContent('upload_spreadsheet')"> <h3>Upload Marks</h3> </div>
+                        <div class="navCategory" onclick="loadContent('manage_requests')"> <h3>Manage Access Requests</h3> </div>
+                        <div class="navCategory" onclick="loadContent('manage_auto_letters')"> <h3>Manage Auto Letters</h3> </div>
+                        <div class="navCategory" onclick="loadContent('edit_auto_letters')"> <h3>Edit Auto Letters</h3> </div>`
+                    );
+                break;
+
+                case 'SA': 
+                    $("#parent").append(
+                        `<div class="navCategory" onclick="loadContent('upload_spreadsheet')"> <h3>Upload Marks</h3> </div>
+                        <div class="navCategory" onclick="loadContent('manage_requests')"> <h3>Manage Access Requests</h3> </div>
+                        <div class="navCategory" onclick="loadContent('manage_auto_letters')"> <h3>Manage Auto Letters</h3> </div>
+                        <div class="navCategory" onclick="loadContent('edit_auto_letters')"> <h3>Edit Auto Letters</h3> </div>`
+                    );
+                break;
+
+                case 'L': 
+                    $("#parent").append(
+                        `<div class="navCategory" onclick="loadContent('upload_spreadsheet')"> <h3>Upload Marks</h3> </div>`
+                    );
+                break;
+                    
+            }
+            
         },
         error: function (msg) {
             console.log("ERROR:");

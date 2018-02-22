@@ -9,7 +9,7 @@
 
     // $query = "SELECT staffNo, mwsPassword from staff where mwsUser = ?";
     
-    $query = "SELECT staffNo, mwsPassword, mwsUser, userType from staff where mwsUser = ?";
+    $query = "SELECT staffNo, mwsPassword, mwsUser, userType FROM Staff WHERE mwsUser = ?";
 
     $stmt = mysqli_stmt_init($db_con);
 
@@ -26,7 +26,7 @@
             if (!empty($row)) {
                 $i++;
             }
-            $query = "SELECT studentNo, mwsPassword, mwsUser from student where mwsUser = ?";
+            $query = "SELECT studentNo, mwsPassword, mwsUser FROM Student WHERE mwsUser = ?";
         }
     }
     //Correct username
@@ -34,13 +34,16 @@
         $passHash = password_hash($row['mwsPassword'], PASSWORD_DEFAULT);
         //Correct username, correct password
         if (password_verify($passPre, $passHash)) {
-            $data['login'] = 'true';
+            $data['login'] = "true";
             $_SESSION['mwsUser'] = $row['mwsUser'];  
             $data['result'] = $row;
+            //Staff details
             if (!empty($row['staffNo'])) {
                 $_SESSION['mwsUser'] = $row['mwsUser'];
+                $_SESSION['accNo'] = $row['staffNo'];
             } else {
-                $_SESSION['mwsUser'] = $row['mwsUser'];
+                 //Student details
+                $_SESSION['accNo'] = $row['studentNo'];
             }
             if (!empty($row['userType'])) {
                 $_SESSION['userType'] = $row['userType'];
@@ -50,16 +53,18 @@
             
             //correct username, incorrect password
         } else {
-                $data['login'] = 'false';
+                $data['login'] = "false";
                 $data['message'] = "Password incorrect";
                 $data['failType'] = "password";
                 $data['result'] = $row;
             }
             //Username doesn't exist in staff table
         } else {
-            $data['login'] = 'false';
+            $data['login'] = "false";
             $data['message'] = "Username not found";
             $data['failType'] = "username";
+
+            //Not sure if needed
             $data['result'] = $result;
             $data['stmt'] = $stmt;
         }
