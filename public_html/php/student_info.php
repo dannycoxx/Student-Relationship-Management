@@ -11,9 +11,9 @@
     //Student is accessing their own information
     if ($requesterUserType == "S") {
         $data['personalInfo'] = getPersonalInformation($studentNo, $db_con);
-        $studentNo = $data['personalInfo']['studentNo'];
-        $data['moduleInfo'] = getModuleInfo($studentNo, $db_con);
-        $data['timetable'] = getTimetable($studentNo, $db_con);
+        // $studentNo = $data['personalInfo']['studentNo'];
+       // $data['moduleInfo'] = getModuleInfo($studentNo, $db_con);
+       // $data['timetable'] = getTimetable($studentNo, $db_con);
         // $data['personalInfo'] = getMarks($studentMws, $db_con);
         // $data['personalInfo'] = getAttendance($studentMws, $db_con);
 
@@ -50,6 +50,8 @@
         return $data['personalInfo'];
         mysqli_free_result($result);
     }
+
+    /*
 
     function getModuleInfo($studentNo, $db_con) {
         $query = $query = "SELECT Module.* from Module 
@@ -126,4 +128,5 @@
         mysqli_free_result($result);
     }
 */
+
 ?>
