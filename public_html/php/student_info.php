@@ -1,5 +1,6 @@
 <?php
-    require_once ('../php/db_config.php');
+    include ('../php/db_config.php');
+    
     $studentNo = $_POST['studentNo'];
     $requesterUserType = $_SESSION['userType'];
     $requesterAccNo = $_SESSION['accNo'];
@@ -12,20 +13,20 @@
     if ($requesterUserType == "S") {
         $data['personalInfo'] = getPersonalInformation($studentNo, $db_con);
         // $studentNo = $data['personalInfo']['studentNo'];
-       // $data['moduleInfo'] = getModuleInfo($studentNo, $db_con);
+    //    $data['moduleInfo'] = getModuleInfo($studentNo, $db_con);
        // $data['timetable'] = getTimetable($studentNo, $db_con);
         // $data['personalInfo'] = getMarks($studentMws, $db_con);
         // $data['personalInfo'] = getAttendance($studentMws, $db_con);
 
         //lecturer requesting information
     } else if ($requesterUserType == "L") {
-        
+        $data['personalInfo'] = getPersonalInformation($studentNo, $db_con);
         //Office Admin requesting information
     } else if ($requesterUserType == "OA") {
-        
+        $data['personalInfo'] = getPersonalInformation($studentNo, $db_con);
         //System Admin requesting information
     } else if ($requesterUserType == "SA") {
-        
+        $data['personalInfo'] = getPersonalInformation($studentNo, $db_con);
     } else {
         
     }
@@ -50,16 +51,16 @@
         return $data['personalInfo'];
         mysqli_free_result($result);
     }
-
     /*
-
     function getModuleInfo($studentNo, $db_con) {
-        $query = $query = "SELECT Module.* from Module 
-            JOIN Registration ON Module.moduleCode = Registration.moduleCode 
-                where Registration.studentNo = '$studentNo' 
-                AND Registration.status = 1";
+        // $query = "SELECT Module.* FROM Module 
+        //     JOIN Registration ON Module.moduleCode = Registration.moduleCode 
+        //         where Registration.studentNo = '$studentNo' 
+        //         AND Registration.status = 1";
+        $query = "SELECT * FROM Module";
+        
 
-        $result = mysqli_query($db_con, $query); 
+        $result = mysqli_query($db_con, $query);
 
         if (mysqli_num_rows($result) > 0) {
             $data['moduleInfo'] = mysqli_fetch_assoc($result);               
@@ -69,7 +70,7 @@
         return $data['moduleInfo'];
         mysqli_free_result($result);
     }
-    
+    /*
     function getTimetable($studentNo, $db_con) {
         //get modules student registered on
         //get sessions for module
