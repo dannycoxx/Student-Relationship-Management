@@ -79,10 +79,11 @@ function initialiseNavDrawer() {
         dataType: "json",
         success: function (data) {
             document.getElementById('mwsUsername').innerHTML = data['mwsUser'];
-            switch (data['userType']) {
+            var userType = data['userType'];
+            switch (userType) {
                 //On login if student, load student page by default
                 case 'OA': 
-                    $("#parent").append(
+                    $("#dynamicDivContent").append(
                         `<div class="navCategory" onclick="loadContent('upload_spreadsheet')"> <h3>Upload Marks</h3> </div>
                         <div class="navCategory" onclick="loadContent('manage_requests')"> <h3>Manage Access Requests</h3> </div>
                         <div class="navCategory" onclick="loadContent('manage_auto_letters')"> <h3>Manage Auto Letters</h3> </div>
@@ -91,7 +92,7 @@ function initialiseNavDrawer() {
                 break;
 
                 case 'SA': 
-                    $("#parent").append(
+                    $("#dynamicDivContent").append(
                         `<div class="navCategory" onclick="loadContent('upload_spreadsheet')"> <h3>Upload Marks</h3> </div>
                         <div class="navCategory" onclick="loadContent('manage_requests')"> <h3>Manage Access Requests</h3> </div>
                         <div class="navCategory" onclick="loadContent('manage_auto_letters')"> <h3>Manage Auto Letters</h3> </div>
@@ -100,10 +101,19 @@ function initialiseNavDrawer() {
                 break;
 
                 case 'L': 
-                    $("#parent").append(
+                    $("#dynamicDivContent").append(
                         `<div class="navCategory" onclick="loadContent('upload_spreadsheet')"> <h3>Upload Marks</h3> </div>`
                     );
                 break;
+
+                case 'S':
+                    // $("#parent").append(
+                    //     `<div class="navCategory" onclick="loadContent('upload_spreadsheet')"> <h3>Upload Marks</h3> </div>`
+                    // );
+                    break;
+
+                default:
+                    console.log('Unable to determine account type');
                     
             }
             
