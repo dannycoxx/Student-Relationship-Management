@@ -27,12 +27,9 @@ function sendSearch(textBox){
 }
 
 function searchResultsTable(studentData) {
-    // console.log("SEARCH RESULTS TABLE:");
-    // console.log(studentData);
     var table = "<table  class=\"studentResultTable\">";
-    
     if (studentData == "FALSE") {
-        
+
     } else {
         table += "<tr class=\"studentResultTableHead\">";
         for (var i = 0; i < studentData.length; i++) {
@@ -52,10 +49,9 @@ function searchResultsTable(studentData) {
     document.getElementById('searchResults').innerHTML = table;
 }
 
-function getStudent(row) {
-    // console.log(row);
+function getStudent(studentNo) {
     $("#main").load("student.html");
-    //call 
+    loadStudent(studentNo);
 }
 
 

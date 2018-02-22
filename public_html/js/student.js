@@ -1,11 +1,13 @@
 $(document).ready(function () {  
-    var studentMWS = "sgdjones2"; 
-    loadStudent(studentMWS);
+    // var studentMWS = "sgdjones2"; 
+    // loadStudent(studentNo);
 });
 
-function loadStudent(studentMWS) {
+function loadStudent(studentNo) {
+    console.log("student.js loadStudent(): ");
+    console.log(studentNo);
     var dataToSend = {
-        studentMWS : studentMWS
+        studentNo : studentNo
     }
     $.ajax({
             type: 'POST',

@@ -39,18 +39,17 @@
             $data['result'] = $row;
             //Staff details
             if (!empty($row['staffNo'])) {
-                $_SESSION['mwsUser'] = $row['mwsUser'];
                 $_SESSION['accNo'] = $row['staffNo'];
             } else {
                  //Student details
+                $data['userType'] = 'S';
                 $_SESSION['accNo'] = $row['studentNo'];
             }
             if (!empty($row['userType'])) {
                 $_SESSION['userType'] = $row['userType'];
             } else {
                 $_SESSION['userType'] = 'S';
-            }
-            
+            }  
             //correct username, incorrect password
         } else {
                 $data['login'] = "false";

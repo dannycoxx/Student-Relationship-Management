@@ -23,7 +23,7 @@ function login() {
                     // console.log("RECEIVING:");
                     // console.log(data);
                     if (data['login'] == 'true') {
-                        loginSuccess();
+                        loginSuccess(data['userType']);
                     } else {
                         if (data['failType'] == "username") {
                             usernameError(data['message']);
@@ -61,7 +61,8 @@ function passwordError(fail) {
     document.getElementById("passwordError").innerHTML = fail;
 }
 
-function loginSuccess() {
+function loginSuccess(userType) {
     window.location.replace("home.html");
+
     // document.getElementById('mwsUser').value = mwsUser;
 }

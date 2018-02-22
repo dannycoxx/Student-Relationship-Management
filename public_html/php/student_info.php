@@ -1,17 +1,16 @@
 <?php
     require_once ('../php/db_config.php');
-    $studentMws = $_POST['studentMWS'];
+    $studentNo = $_POST['studentNo'];
     $requesterUserType = $_SESSION['userType'];
-    $requesterMws = $_SESSION['mwsUser'];
-    if ($studentMws == "") {
-        $studentMws = $requesterMws;
+    $requesterAccNo = $_SESSION['accNo'];
+    if ($studentNo == "") {
+        $studentNo = $requesterAccNo;
     }
-    
     
     $data = array();
     //Student is accessing their own information
     if ($requesterUserType == "S") {
-        $data['personalInfo'] = getPersonalInformation($studentMws, $db_con);
+        $data['personalInfo'] = getPersonalInformation($studentNo, $db_con);
         $studentNo = $data['personalInfo']['studentNo'];
         $data['moduleInfo'] = getModuleInfo($studentNo, $db_con);
         $data['timetable'] = getTimetable($studentNo, $db_con);
@@ -35,11 +34,11 @@
     mysqli_close($db_con);
     exit();
     
-    function getPersonalInformation($studentMws, $db_con) {
+    function getPersonalInformation($studentNo, $db_con) {
         $query = "SELECT studentNo, forename, surname, mwsUser, csdUser, 
             email, prefEmail, permAddress, termAddress, phone, termPhone, 
             advisor, degreeCode, yearStudy, admitYear FROM student WHERE
-            mwsUser = '$studentMws'";
+            studentNo = '$studentNo'";
 
         $result = mysqli_query($db_con, $query); 
 
@@ -89,7 +88,7 @@
     }
     function getAttendance($studentNo, $db_con) {
         $query = "SELECT * FROM student WHERE
-            mwsUser = '$studentMws'";
+            studentNo = '$studentNo'";
 
         if (mysqli_num_rows($result) > 0) {
             $result = mysqli_query($db_con, $query); 

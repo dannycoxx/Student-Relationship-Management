@@ -5,6 +5,7 @@ var currentPage;
 $(document)
     .ready(function () {
         $("#main").load("homepage.html");
+        currentPage = 'homepage';
         initialiseNavDrawer();
 });
 
