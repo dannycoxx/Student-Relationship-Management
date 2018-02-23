@@ -7,7 +7,7 @@
     if ($studentNo == "") {
         $studentNo = $requesterAccNo;
     }
-    
+ 
     $data = array();
     $moduleCodes = array();
     //Student is accessing their own information
@@ -19,8 +19,7 @@
         //check if lecturer has access rights
         $data['personalInfo'] = getPersonalInformation($studentNo, $db_con);
         $data['moduleInfo'] = getModuleInfo($studentNo, $db_con);
-        // $moduleCodes = $data['moduleInfo']['moduleCode'];
-        // $data['timetable'] = getTimetable($studentNo, $db_con, $moduleCodes);
+        $data['timetable'] = getTimetable($studentNo, $data, $db_con);
         // $data['personalInfo'] = getMarks($studentMws, $db_con);
         // $data['personalInfo'] = getAttendance($studentMws, $db_con);
         //Office Admin requesting information
@@ -34,7 +33,7 @@
     } else {
         
     }
-
+    // print_r($data);
     echo json_encode($data);
     mysqli_close($db_con);
     exit();
@@ -76,27 +75,39 @@
         return $data['moduleInfo'];
         mysqli_free_result($result);
     }
-    /*
-    function getTimetable($moduleCodes, $db_con, $data) {
-         $data['timetable'] = array();
-        //  $data['moduleInfo']['moduleCode'] = array();
+    
+    function getTimetable($studentNo, $data, $db_con) {
+        $data['timetable'] = array();
+        $moduleCodes = array_column($data['moduleInfo'], 'moduleCode');
+
         //get modules student registered on \/
         //get sessions for module \
         //create table with session data
         //Table contains all lots of session dada
-        foreach ($moduleCodes as $key => $value) {
-            $moduleCodeQuery = $moduleCodeQuery.'moduleCode = '.$value.'\'OR';
+
+        $i = 0;
+        $moduleCodeQuery = "";
+        foreach ($moduleCodes as $value) {
+            $moduleCodeQuery = $moduleCodeQuery.'\''.$value.'\'';
+            $i++;
+            if ($i < count($moduleCodes)) {
+                $moduleCodeQuery = $moduleCodeQuery.' OR ';
+            }
         }
-        $query = "SELECT * FROM session WHERE ".$moduleCodes;
+        $query = "SELECT * FROM session WHERE moduleCode = ".$moduleCodeQuery;
+        $result = mysqli_query($db_con, $query);
+        // $query = "SELECT * FROM session";
 
         if (mysqli_num_rows($result) > 0) {
             while($row = mysqli_fetch_assoc($result)){
                 array_push($data['timetable'], $row);
-                // $data['moduleInfo'] = $row;  
             } 
         } else {
             $data['timetable'] = "FALSE";
         }
+        
+        array_push($data['timetable'], $moduleCodes);
+        return $data['timetable'];
         mysqli_free_result($result);
     }
     /*
