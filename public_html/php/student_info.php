@@ -9,21 +9,25 @@
     }
     
     $data = array();
+    $moduleCodes = array();
     //Student is accessing their own information
     if ($requesterUserType == "S") {
         $data['personalInfo'] = getPersonalInformation($studentNo, $db_con);
-        // $studentNo = $data['personalInfo']['studentNo'];
-    //    $data['moduleInfo'] = getModuleInfo($studentNo, $db_con);
-       // $data['timetable'] = getTimetable($studentNo, $db_con);
-        // $data['personalInfo'] = getMarks($studentMws, $db_con);
-        // $data['personalInfo'] = getAttendance($studentMws, $db_con);
-
+        $data['moduleInfo'] = getModuleInfo($studentNo, $db_con);
         //lecturer requesting information
     } else if ($requesterUserType == "L") {
+        //check if lecturer has access rights
         $data['personalInfo'] = getPersonalInformation($studentNo, $db_con);
+        $data['moduleInfo'] = getModuleInfo($studentNo, $db_con);
+        // $moduleCodes = $data['moduleInfo']['moduleCode'];
+        // $data['timetable'] = getTimetable($studentNo, $db_con, $moduleCodes);
+        // $data['personalInfo'] = getMarks($studentMws, $db_con);
+        // $data['personalInfo'] = getAttendance($studentMws, $db_con);
         //Office Admin requesting information
     } else if ($requesterUserType == "OA") {
         $data['personalInfo'] = getPersonalInformation($studentNo, $db_con);
+        $data['moduleInfo'] = getModuleInfo($studentNo, $db_con);
+
         //System Admin requesting information
     } else if ($requesterUserType == "SA") {
         $data['personalInfo'] = getPersonalInformation($studentNo, $db_con);
@@ -51,19 +55,21 @@
         return $data['personalInfo'];
         mysqli_free_result($result);
     }
-    /*
+    
     function getModuleInfo($studentNo, $db_con) {
-        // $query = "SELECT Module.* FROM Module 
-        //     JOIN Registration ON Module.moduleCode = Registration.moduleCode 
-        //         where Registration.studentNo = '$studentNo' 
-        //         AND Registration.status = 1";
-        $query = "SELECT * FROM Module";
-        
+        $data['moduleInfo'] = array();
+        $query = "SELECT Module.* FROM Module 
+            JOIN Registration ON Module.moduleCode = Registration.moduleCode 
+                where Registration.studentNo = '$studentNo' 
+                AND Registration.status = 1";
 
         $result = mysqli_query($db_con, $query);
 
         if (mysqli_num_rows($result) > 0) {
-            $data['moduleInfo'] = mysqli_fetch_assoc($result);               
+            while($row = mysqli_fetch_assoc($result)){
+                array_push($data['moduleInfo'], $row);
+                // $data['moduleInfo'] = $row;  
+            }
         } else {
             $data['moduleInfo'] = "FALSE";
         }
@@ -71,24 +77,29 @@
         mysqli_free_result($result);
     }
     /*
-    function getTimetable($studentNo, $db_con) {
-        //get modules student registered on
-        //get sessions for module
+    function getTimetable($moduleCodes, $db_con, $data) {
+         $data['timetable'] = array();
+        //  $data['moduleInfo']['moduleCode'] = array();
+        //get modules student registered on \/
+        //get sessions for module \
         //create table with session data
         //Table contains all lots of session dada
-        foreach ($data['moduleInfo']['moduleCode'] as $key => $value) {
+        foreach ($moduleCodes as $key => $value) {
             $moduleCodeQuery = $moduleCodeQuery.'moduleCode = '.$value.'\'OR';
         }
-        $query = "SELECT * FROM student WHERE ".$moduleCodes;
+        $query = "SELECT * FROM session WHERE ".$moduleCodes;
 
         if (mysqli_num_rows($result) > 0) {
-            $result = mysqli_query($db_con, $query); 
-            $data['timetable'] = $result;   
+            while($row = mysqli_fetch_assoc($result)){
+                array_push($data['timetable'], $row);
+                // $data['moduleInfo'] = $row;  
+            } 
         } else {
             $data['timetable'] = "FALSE";
         }
         mysqli_free_result($result);
     }
+    /*
     function getAttendance($studentNo, $db_con) {
         $query = "SELECT * FROM student WHERE
             studentNo = '$studentNo'";
