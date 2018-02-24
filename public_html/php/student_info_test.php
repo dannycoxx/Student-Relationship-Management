@@ -24,8 +24,10 @@
         $data['personalInfo'] = getPersonalInformation($studentNo, $db_con);
         $data['moduleInfo'] = getModuleInfo($studentNo, $db_con);
         $data['timetable'] = getTimetable($studentNo, $data, $db_con);
+        $data['attendance'] = getAttendance($studentNo, $data, $db_con);
+        $data['meetingNotes'] = getMeetingNotes($studentNo, $db_con);
+
         // $data['personalInfo'] = getMarks($studentMws, $db_con);
-        // $data['personalInfo'] = getAttendance($studentMws, $db_con);
         //Office Admin requesting information
     } else if ($requesterUserType == "OA") {
         $data['personalInfo'] = getPersonalInformation($studentNo, $db_con);
@@ -38,7 +40,7 @@
         
     }
     // print_r($data);
-    echo json_encode($data);
+    // echo json_encode($data);
     mysqli_close($db_con);
     exit();
     
@@ -81,27 +83,21 @@
     }
     
     function getTimetable($studentNo, $data, $db_con) {
+        //check current date so timetable only loads for current week
         $data['timetable'] = array();
         $moduleCodes = array_column($data['moduleInfo'], 'moduleCode');
-
-        //get modules student registered on \/
-        //get sessions for module \
-        //create table with session data
-        //Table contains all lots of session dada
 
         $i = 0;
         $moduleCodeQuery = "";
         foreach ($moduleCodes as $value) {
-            $moduleCodeQuery = $moduleCodeQuery.'\''.$value.'\'';
+            $moduleCodeQuery = $moduleCodeQuery.'moduleCode = \''.$value.'\'';
             $i++;
             if ($i < count($moduleCodes)) {
                 $moduleCodeQuery = $moduleCodeQuery.' OR ';
             }
         }
-        $query = "SELECT * FROM session WHERE moduleCode = ".$moduleCodeQuery;
+        $query = "SELECT * FROM session WHERE ".$moduleCodeQuery;
         $result = mysqli_query($db_con, $query);
-        
-        // $query = "SELECT * FROM session";
 
         if (mysqli_num_rows($result) > 0) {
             while($row = mysqli_fetch_assoc($result)){
@@ -111,50 +107,57 @@
             $data['timetable'] = "FALSE";
         }
         
-        array_push($data['timetable'], $moduleCodes);
+        // array_push($data['timetable'], $moduleCodes);
         return $data['timetable'];
         mysqli_free_result($result);
     }
-    /*
-    function getAttendance($studentNo, $db_con) {
-        $query = "SELECT * FROM student WHERE
-            studentNo = '$studentNo'";
+
+    function getAttendance($studentNo, $data, $db_con) {
+        //SQL query needs to be fixed 
+        $data['attendance'] = array();
+        $sessionIds = array_column($data['timetable'], 'sessionId');
+        // echo "<br>------------------------------------------------------------------------------------------------------------------------------<br>";
+        // print_r($sessionIds);
+        $i = 0;
+        $sessionIdQuery = "";
+        foreach ($sessionIds as $value) {
+            $sessionIdQuery = $sessionIdQuery.'sessionId = '.$value;
+            $i++;
+            if ($i < count($sessionIds)) {
+                $sessionIdQuery = $sessionIdQuery.' OR ';
+            }
+        }
+        $query = "SELECT sessionId, status FROM attendance WHERE studentNo = '$studentNo' AND(".$sessionIdQuery.")";
+        $result = mysqli_query($db_con, $query);
 
         if (mysqli_num_rows($result) > 0) {
-            $result = mysqli_query($db_con, $query); 
-            $data['timetable'] = $result;   
+            while($row = mysqli_fetch_assoc($result)){
+                array_push($data['attendance'], $row);
+            } 
         } else {
-            $data['timetable'] = "FALSE";
+            $data['attendance'] = "FALSE";
         }
+        // array_push($data['attendance'], $moduleCodes);
+        return $data['attendance'];
         mysqli_free_result($result);
     }
-/*
-    function getMeetingNotes() {
-        $studentData['meetingNotes'] = $result;
+
+    function getMeetingNotes($studentNo, $db_con) {
+        $data['meetingNotes'] = array();
+
+        $query = "SELECT staffNo, content, dateTime FROM meetingnote WHERE studentNo = '$studentNo'";
+        $result = mysqli_query($db_con, $query);
+
+        if (mysqli_num_rows($result) > 0) {
+            while($row = mysqli_fetch_assoc($result)){
+                array_push($data['meetingNotes'], $row);
+            } 
+        } else {
+            $data['meetingNotes'] = "FALSE";
+        }
+        print_r($data['meetingNotes']);
+        return $data['meetingNotes'];
         mysqli_free_result($result);
     }
-    function getMarks() {
-        //get modules student registered on
-        //get assessments for modules
-        //get marks for assessment
-        //populate table for modules & assessments
-        //populate marks
-        $studentData['marks'] = $result;
-        mysqli_free_result($result);
-    }
-    function getAttendance() {
-        //get modules student registered on
-        //get sessions for module
-        //create table with session data
-        //get attendance for sessions
-        $studentData['attendance'] = $result;
-        mysqli_free_result($result);
-    }
-    function getModules() {
-        //use modules from other methods?
-        $studentData['modules'] = $result;
-        mysqli_free_result($result);
-    }
-*/
 
 ?>
