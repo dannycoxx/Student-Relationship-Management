@@ -49,19 +49,19 @@ function generatePersonalInfo(data) {
                     </tr>
                     <tr>
                         <td>MWS Username:</td>
-                        <td id='mwsUsername'>hello</td>
+                        <td id='mwsUsername'>`+ data['mwsUser'] +`</td>
                     </tr>
                     <tr>
                         <td>Term Contact Number:</td>
-                        <td id='termContact'></td>
+                        <td id='termContact'>`+ data['termPhone'] +`</td>
                     </tr>
                     <tr>
                         <td>Term Address:</td>
-                        <td id='termAddress'></td>
+                        <td id='termAddress'>`+ data['termAddress'] +`</td>
                     </tr>
                     <tr>
                         <td>Email Address:</td>
-                        <td id='emailAddress'></td>
+                        <td id='emailAddress'>`+ data['email'] +`</td>
                     </tr>
                 </table>
         </div>
