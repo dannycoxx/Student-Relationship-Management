@@ -14,15 +14,16 @@
  
     $data = array();
     $moduleCodes = array();
+    $data['requesterUserType'] = $requesterUserType;
     //Student is accessing their own information
     if ($requesterUserType == "S") {
         $data['personalInfo'] = getPersonalInformation($studentNo, $db_con);
-        $data['moduleInfo'] = getModuleInfo($studentNo, $db_con);
+        $data['moduleInfo'] = getModules($studentNo, $db_con);
         //lecturer requesting information
     } else if ($requesterUserType == "L") {
         //check if lecturer has access rights
         $data['personalInfo'] = getPersonalInformation($studentNo, $db_con);
-        $data['moduleInfo'] = getModuleInfo($studentNo, $db_con);
+        $data['moduleInfo'] = getModules($studentNo, $db_con);
         $data['timetable'] = getTimetable($studentNo, $data, $db_con);
         $data['attendance'] = getAttendance($studentNo, $data, $db_con);
         $data['meetingNotes'] = getMeetingNotes($studentNo, $db_con);
@@ -30,7 +31,7 @@
         //Office Admin requesting information
     } else if ($requesterUserType == "OA") {
         $data['personalInfo'] = getPersonalInformation($studentNo, $db_con);
-        $data['moduleInfo'] = getModuleInfo($studentNo, $db_con);
+        $data['moduleInfo'] = getModules($studentNo, $db_con);
 
         //System Admin requesting information
     } else if ($requesterUserType == "SA") {
@@ -59,7 +60,7 @@
         mysqli_free_result($result);
     }
     
-    function getModuleInfo($studentNo, $db_con) {
+    function getModules($studentNo, $db_con) {
         $data['moduleInfo'] = array();
         $query = "SELECT Module.* FROM Module 
             JOIN Registration ON Module.moduleCode = Registration.moduleCode 
