@@ -65,8 +65,6 @@ function generatePersonalInfo(data) {
                     </tr>
                 </table>
         </div>
-
-
     `);
 }
 function generateModules(data) {
