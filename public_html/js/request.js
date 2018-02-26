@@ -24,25 +24,25 @@ function loadRequests() {
 }
 
 function insertRequests(data) {
-    // $("#requests").append(`
-    //     <div class="studentInfoInner"> 
-    //         <h3>Active Requests</h3>
-    //         <hr> 
-    //     </div>
-    // `);
-    // for (var i=0; i<data['requests'].length; i++) {
-    //     $("#requests").append(`
-    //     <div class="request">
-    //          <div class="requestContent">
-    //             <h3>`+data['title']+`</h3>
-    //             <p>`+data['requester']+`</p>
-    //             <p>`+data['description']+`</p>
-    //          </div>
-    //          <div class="requestButtons">
-    //             // action dropdown menu with accept/reject etc. buttons to confirm actions
-    //          </div>
-    //     </div>
-    //     `);
-    // }
+    $("#requests").append(`
+        <div class="studentInfoInner"> 
+            <h3>Active Requests</h3>
+            <hr> 
+        </div>
+    `);
+    for (var i=0; i<data.length; i++) {
+        $("#requests").append(`
+        <div class="request">
+             <div class="requestContent">
+                <h3>`+data[i]['title']+`</h3>
+                <p>`+data[i]['requester']+`</p>
+                <p>`+data[i]['description']+`</p>
+             </div>
+             <div class="requestButtons">
+                // action dropdown menu with accept/reject etc. buttons to confirm actions
+             </div>
+        </div>
+        `);
+    }
     
 }
