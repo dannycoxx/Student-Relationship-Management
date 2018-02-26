@@ -14,7 +14,10 @@ body {
     color: #1e1e1e; 
 }
 div.main {
-    padding: 5px;
+    height: 100%;
+    padding: 20px 104px 20px 5px;
+    /* padding: 20px 20px 20px 5px; */
+    /* change to hidden for content to wrap around nav drawer button */
     overflow-x: none;
     overflow-y: auto;
 }
