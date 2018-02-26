@@ -1,9 +1,11 @@
 <?php
     include ('../php/db_config.php');
 
-    $requestId = $_POST['studentNo'];
-    $updatedStatus = $_POST['studentNo'];
-    $requestType = $_POST['studentNo'];
+    $requestType = $_POST['requestType'];
+    if ($requestType != 'retrieve') {
+        $requestId = $_POST['requestId'];
+        $updatedStatus = $_POST['updatedStatus'];
+    }
 
     $requesterUserType = $_SESSION['userType'];
     $requesterAccNo = $_SESSION['accNo'];
@@ -20,10 +22,13 @@
     
         if (mysqli_num_rows($result) > 0) {
             while($row = mysqli_fetch_assoc($result)){
-                array_push($data['requests'], $row);
+                if ($row['description'] == "") {
+                    $row['description'] = 'No description provided';
+                }
+                array_push($data, $row);
             } 
         } else {
-            $data['requests'] = "FALSE";
+            $data = "FALSE";
         }
     } else if ($requestType == 'update') {
         $query = "UPDATE request SET status = '$updatedStatus' WHERE requestId = '$requestId'";
