@@ -2,9 +2,8 @@
     include ('../php/db_config.php');
 
     $requestType = $_POST['requestType'];
-    if ($requestType != 'retrieve') {
-        $requestId = $_POST['requestId'];
-        $updatedStatus = $_POST['updatedStatus'];
+    if ($requestType == 'update') {
+        $changeArray = $_POST['changeArray'];
     }
 
     $requesterUserType = $_SESSION['userType'];
@@ -17,9 +16,9 @@
  
     $data = array();
     if ($requestType == 'retrieve') {
-        $query = "SELECT * FROM request where status = 0";
+        $query = "SELECT * FROM request WHERE status = 0 ORDER BY dateTime";
         $result = mysqli_query($db_con, $query);
-    
+        
         if (mysqli_num_rows($result) > 0) {
             while($row = mysqli_fetch_assoc($result)){
                 if ($row['description'] == "") {
@@ -31,11 +30,14 @@
             $data = "FALSE";
         }
     } else if ($requestType == 'update') {
-        $query = "UPDATE request SET status = '$updatedStatus' WHERE requestId = '$requestId'";
-        if ($updatedStatus == 1) {
-            $data['message'] = "Request approved";
-        } else if ($updatedStatus == -1) {
-            $data['message'] = "Request rejected";
+        for ($i=0; $i<count($changeArray); $i++) {
+            $requestId = $changeArray[$i][0]; 
+            $updatedStatus = $changeArray[$i][1]; 
+            $query = "UPDATE request SET status = '$updatedStatus' WHERE requestId = '$requestId'";
+            if (!$result = mysqli_query($db_con, $query)) {
+                array_push($data['failed'], $requestId);
+                $data['message'] = 'Error submitting changes.';
+            }
         }
     }
     

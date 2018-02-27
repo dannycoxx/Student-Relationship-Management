@@ -5,6 +5,8 @@
 		- student
 		- datetime
 		- status allowed to be null
+		- updateDateTime
+		- updatedBy
 - Added fields to Student table
 		- userType
 - Made 'NotNull' false for field status in Request table

@@ -127,18 +127,3 @@ function initialiseNavDrawer() {
 
     // document.getElementById('mwsUsername').innerHTML = $data['mwsUser'];
 }
-
-// function applyTheme()[
-
-// ]
-
-// function toggleNightMode() {
-//     if (nightMode == false) {
-//         var filename = "defaultDark.css";
-//         nightMode = true;
-//     } else if (nightMode == true) {
-//         var filename = "defaultLight.css";
-//         nightMode = false;
-//     }
-// }
-
