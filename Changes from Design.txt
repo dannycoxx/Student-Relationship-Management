@@ -5,6 +5,7 @@
 		- student
 		- datetime
 		- status allowed to be null
+		//////change
 		- updateDateTime
 		- updatedBy
 - Added fields to Student table

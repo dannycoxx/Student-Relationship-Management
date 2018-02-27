@@ -6,14 +6,9 @@
         $changeArray = $_POST['changeArray'];
     }
 
-    $requesterUserType = $_SESSION['userType'];
-    $requesterAccNo = $_SESSION['accNo'];
+    $staffUserType = $_SESSION['userType'];
+    $staffAccNo = $_SESSION['accNo'];
 
-    // debug only
-    // $studentNo = 1;
-    // $requesterUserType = 'L';
-    // $requesterAccNo = 1;
- 
     $data = array();
     if ($requestType == 'retrieve') {
         $query = "SELECT * FROM request WHERE status = 0 ORDER BY dateTime";
@@ -30,10 +25,19 @@
             $data = "FALSE";
         }
     } else if ($requestType == 'update') {
+        $query = "SELECT email FROM staff WHERE staffNo = '$staffAccNo'";
+        $result = mysqli_query($db_con, $query);
+        $row = mysqli_fetch_assoc($result);
+        $staffEmail = $row['email'];
+        
+        $timestamp = time();
+        $currentTime = date('Y-m-d H:i:s', $timestamp);
+
+
         for ($i=0; $i<count($changeArray); $i++) {
             $requestId = $changeArray[$i][0]; 
             $updatedStatus = $changeArray[$i][1]; 
-            $query = "UPDATE request SET status = '$updatedStatus' WHERE requestId = '$requestId'";
+            $query = "UPDATE request SET status = '$updatedStatus', updatedDateTime = '$currentTime', updatedBy = '$staffEmail' WHERE requestId = '$requestId'";
             if (!$result = mysqli_query($db_con, $query)) {
                 array_push($data['failed'], $requestId);
                 $data['message'] = 'Error submitting changes.';
