@@ -35,7 +35,7 @@ function insertRequests(data) {
     */
     $("#requests").append(`
         <div class="studentInfoInner"> 
-            <h3>Active Requests</h3>
+            <h2>Active Requests</h2>
             <hr> 
         </div>
     `);

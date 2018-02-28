@@ -11,7 +11,11 @@
 
     $data = array();
     if ($requestType == 'retrieve') {
-        $query = "SELECT commhistory.*, autocomm.dateTimeToSend FROM commhistory JOIN autocomm ON commhistory.commHistId = autocomm.commHistId WHERE autocomm.sent = 0";
+        $query = "SELECT commhistory.*, autocomm.dateTimeToSend, student.studentNo, student.forename, student.surname, student.degreeCode, student.yearStudy
+                    FROM commhistory 
+                    JOIN autocomm ON commhistory.commHistId = autocomm.commHistId
+                    JOIN student ON commhistory.recipient = student.email
+                    WHERE autocomm.sent = 0";
         $result = mysqli_query($db_con, $query);
         
         if (mysqli_num_rows($result) > 0) {
