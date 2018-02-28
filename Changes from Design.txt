@@ -5,12 +5,12 @@
 		- student
 		- datetime
 		- status allowed to be null
-		//////change
-		- updateDateTime
+		- updatedDateTime
 		- updatedBy
+		- made 'NotNull' false for field status in Request table
 - Added fields to Student table
 		- userType
-- Made 'NotNull' false for field status in Request table
+- Renamed column 'datetime' in autocomm to 'dateTimeToSend' for clarity
 
 /////////////////// SYSTEM ///////////////////
 - Redesigned log in page
