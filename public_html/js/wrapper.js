@@ -35,9 +35,8 @@ function toggleNav(nav) {
 }
 
 function loadContent(page) {
+    //AUTHENTICATE USER TO ACCESS CERTAIN PAGES
     currentPage = page;
-    // console.log("PAGE: ")
-    // console.log(currentPage);
     $("#main").load(page + ".html");
     
 }
@@ -97,6 +96,7 @@ function initialiseNavDrawer() {
                         `<div class="navCategory" onclick="loadContent('upload_spreadsheet')"> <h3>Upload Marks</h3> </div>
                         <div class="navCategory" onclick="loadContent('manage_requests')"> <h3>Manage Access Requests</h3> </div>
                         <div class="navCategory" onclick="loadContent('manage_auto_letters')"> <h3>Manage Auto Letters</h3> </div>
+                        <div class="navOption"> <h4>Run Auto Letter Scripts</h4> </div>
                         <div class="navCategory" onclick="loadContent('edit_auto_letters')"> <h3>Edit Auto Letters</h3> </div>`
                     );
                 break;

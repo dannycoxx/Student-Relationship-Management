@@ -5,6 +5,7 @@ $(document).ready(function () {
 });
 
 function loadAutoLetters() {
+    console.log("letters");
     var dataToSend = {
         requestType: 'retrieve'
     }
@@ -52,6 +53,7 @@ function insertAutoLetters(data) {
     for (var i = 0; i < data.length; i++) {
         var body = data[i]['body'];
         var bodySubstring = body.substring(0, 30);
+        bodySubstring = bodySubstring + '...';
         
         $('#autoLetterTable').append(`
             <tr id="`+data[i]['commHistid']+`">
@@ -61,7 +63,7 @@ function insertAutoLetters(data) {
                 <td>`+data[i]['subject']+`</td>
                 <td>`+bodySubstring+`</td>
                 <td><input type="checkbox" checked="checked"></td>
-                <td><button type="button" onclick="">Edit Comm</button></td>
+                <td><button type="button" class="editCommButton" onclick="">Edit Comm</button></td>
             </tr>
         `);
     }

@@ -30,6 +30,16 @@ input[type=text], input[type=password], button {
     /* padding: 10px; */
     font-size: 14pt;
 }
+input[type=checkbox] {
+    height: 25px;
+    width: 25px;
+    background-color: red;
+}
+input[type=checkbox]:checked {
+    background-color: green;
+
+}
+
 button {
     color: white;
     border:  none;

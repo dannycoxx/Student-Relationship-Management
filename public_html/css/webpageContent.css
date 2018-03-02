@@ -147,3 +147,8 @@ select.requestAction {
     color: white;
     padding: 15px;
 }
+/* ---------- MANAGE AUTO COMM ---------- */
+button.editCommButton {
+    width: 80px;
+    height: 25px;
+}
