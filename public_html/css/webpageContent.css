@@ -149,6 +149,15 @@ select.requestAction {
 }
 /* ---------- MANAGE AUTO COMM ---------- */
 button.editCommButton {
-    width: 80px;
+    width: 50%;
     height: 25px;
+}
+/* ---------- EMAIL ---------- */
+input[type=text].emailSubject, textarea.emailBody {
+    width: 80%;
+    border: 1px solid black;
+}
+textarea.emailBody {
+    font-size: 14pt;
+    font-family: "calibri";
 }
