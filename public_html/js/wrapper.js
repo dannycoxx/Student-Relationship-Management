@@ -86,8 +86,11 @@ function initialiseNavDrawer() {
                     $("#dynamicDivContent").append(
                         `<div class="navCategory" onclick="loadContent('upload_spreadsheet')"> <h3>Upload Marks</h3> </div>
                         <div class="navCategory" onclick="loadContent('manage_requests')"> <h3>Manage Access Requests</h3> </div>
-                        <div class="navCategory" onclick="loadContent('manage_auto_letters')"> <h3>Manage Auto Letters</h3> </div>
-                        <div class="navCategory" onclick="loadContent('edit_auto_letters')"> <h3>Edit Auto Letters</h3> </div>`
+                        <div class="options"> 
+                            <div class="navCategory" onclick="loadContent('manage_auto_letters')"> <h3>Manage Auto Letters</h3> </div>
+                            <div class="navOption" onclick="loadContent('generate_auto_letters')"> <h4>Generate Automatic Letters</h4> </div>
+                            <div class="navOption" onclick="loadContent('edit_auto_letters')"> <h4>Edit Auto Letter Templates</h4> </div>
+                        </div>`
                     );
                 break;
 
