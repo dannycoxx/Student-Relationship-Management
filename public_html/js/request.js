@@ -44,19 +44,16 @@ function insertRequests(data) {
                     <option value="reject">Reject Request</option>
                 </select>
                 <p title="Date and time of request creation">`+data[i]['dateTime']+`</p>
-                <hr>
                 <p title="Email address of staff requesting access.">Requester: `+data[i]['requester']+`</p>
                 <p title="Email address of student request is concerned with.">Student: `+data[i]['student']+`</p>
+                <hr>
                 <p>`+data[i]['description']+`</p>
              </div>
-             <div class="requestButtons">
-                <!-- action dropdown menu with accept/reject etc. buttons to confirm actions -->
-             </div>
+             <button type="button" id="requestConfirmButton" onclick="confirmChanges()">Confirm</button> 
         </div>
         `);
     }
     $("#requests").append(`
-        <button type="button" id="requestConfirmButton" onclick="confirmChanges()">Confirm</button> 
             
         `);
 }
