@@ -36,8 +36,6 @@ function insertAutoLetters(data) {
     */
     $("#letters").append(`
         <div> 
-            <h2>Manage Pending Automatic Letters</h2>
-            <hr> 
             <table class="autoLetterTable" id="autoLetterTable">
                 <tr>
                     <th colspan="3">Student</th>

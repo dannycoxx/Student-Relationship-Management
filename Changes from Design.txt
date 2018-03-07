@@ -15,3 +15,6 @@
 /////////////////// SYSTEM ///////////////////
 - Redesigned log in page
 - homepage now has live search for students if logged in as non-student and goes stright to student profile if logged in as a student.
+- using PHPmailer to send emails (https://github.com/PHPMailer/PHPMailer/wiki/Tutorial)
+		via mailjet as SMTP server
+- used xlsx processor 

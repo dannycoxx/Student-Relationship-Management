@@ -33,12 +33,6 @@ function insertRequests(data) {
         <option value="`+data[i]['requester']+`">Email Requester</option>
         <option value="`+data[i]['student']+`">Email Student</option>
     */
-    $("#requests").append(`
-        <div class="studentInfoInner"> 
-            <h2>Active Requests</h2>
-            <hr> 
-        </div>
-    `);
     for (var i=0; i<data.length; i++) {
         $("#requests").append(`
         <div class="request">
