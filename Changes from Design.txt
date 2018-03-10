@@ -11,6 +11,7 @@
 - Added fields to Student table
 		- userType
 - Renamed column 'datetime' in autocomm to 'dateTimeToSend' for clarity
+- Added permissions table in order to check if user has sufficient permissions
 
 /////////////////// SYSTEM ///////////////////
 - Redesigned log in page
@@ -18,3 +19,4 @@
 - using PHPmailer to send emails (https://github.com/PHPMailer/PHPMailer/wiki/Tutorial)
 		via mailjet as SMTP server
 - used xlsx processor 
+- lecturers cannot edit auto letters
