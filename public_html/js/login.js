@@ -1,3 +1,12 @@
+$(document).ready(function () {
+    setCurrentPage('index');
+    //call function in wrapper.js
+    if (authenticateLogIn()) {
+        window.location.replace("home.html");
+        setCurrentPage('home');
+    }
+});
+
 function login() {
     document.getElementById("username").style.borderColor = "#1e1e1e";
     document.getElementById("usernameError").innerHTML = "";

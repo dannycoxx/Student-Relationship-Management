@@ -9,7 +9,9 @@ $(document).ready(function () {
         currentPage = 'homepage';
         initialiseNavDrawer();
     } else {
-        window.location.replace("index.html");
+        if (currentPage != 'index') {
+            window.location.replace("index.html");
+        }
     }
 });
 
@@ -18,7 +20,6 @@ function toggleNav(nav) {
     if (navOpen == false) {
         nav.classList.toggle("change");
         $(navDrawer).animate({
-            // padding: '10px 30px 10px 30px',
             width: '280px'
         }, 40);
         $(main).animate({
@@ -29,7 +30,6 @@ function toggleNav(nav) {
         nav.classList.toggle("change");
         $(navDrawer).animate({
             width: '0',
-            // padding: '10px 0px 10px 0px'
         }, 40);
         $(main).animate({
             margin: '0 0 0 0'
@@ -65,9 +65,11 @@ function authenticateLogIn() {
     });
     return authenticated;
 }
-
-function loadContent(page) {
+function setCurrentPage(page) {
     currentPage = page;
+}
+function loadContent(page) {
+    setCurrentPage(page);
     $("#main").load(page + ".html"); 
 }
 function getCurrentPage() {
