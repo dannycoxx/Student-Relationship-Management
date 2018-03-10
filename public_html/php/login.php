@@ -35,6 +35,7 @@
         //Correct username, correct password
         if (password_verify($passPre, $passHash)) {
             $data['login'] = "true";
+            $_SESSION['logIn'] = "true";  
             $_SESSION['mwsUser'] = $row['mwsUser'];  
             $data['result'] = $row;
             //Staff details

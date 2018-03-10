@@ -2,11 +2,15 @@ var query;
 var navOpen = false;
 var currentPage;
 
-$(document)
-    .ready(function () {
+$(document).ready(function () {
+    if (authenticateLogIn()) {
+        console.log(authenticateLogIn());
         $("#main").load("homepage.html");
         currentPage = 'homepage';
         initialiseNavDrawer();
+    } else {
+        window.location.replace("index.html");
+    }
 });
 
 /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
@@ -33,12 +37,38 @@ function toggleNav(nav) {
         navOpen = false;
     }
 }
+function authenticateLogIn() {
+    var authenticated;
+    var dataToSend = {
+        action: 'logIn',
+    }
+    
+    $.ajax({
+        async: false,
+        type: 'POST',
+        url: 'http://localhost/public_html/php/authenticate_user.php',
+        data: dataToSend,
+        dataType: "json",
+        success: function (data) {
+            if (data['logIn'] == true) {
+                // console.log("Data[logIn] = true");
+                authenticated = true;
+            } else if (data['logIn'] == false) {
+                // console.log("Data[logIn] = false");
+                authenticated = false;
+            }
+        },
+        error: function (msg) {
+            console.log("ERROR:");
+            console.log(msg);
+        }
+    });
+    return authenticated;
+}
 
 function loadContent(page) {
-    //AUTHENTICATE USER TO ACCESS CERTAIN PAGES
     currentPage = page;
-    $("#main").load(page + ".html");
-    
+    $("#main").load(page + ".html"); 
 }
 function getCurrentPage() {
     return currentPage.trim();
