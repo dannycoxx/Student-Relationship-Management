@@ -2,18 +2,40 @@
     require_once ('../php/db_config.php');
     $action = $_POST['action'];
     if ($action == 'accessPage') {
-        $accessPage = $_POST['accessPage'];
+        $page = $_POST['page'];
+        $data['page'] = $page;
     }
+    //check if user is already logged in 
     if(isset($_SESSION['logIn']) && $_SESSION['logIn'] == "true"){
         $data['logIn'] = true;
+        //check if user has permission to access page
+        if ($action == 'accessPage') {
+            $query = "SELECT page_name
+                    FROM page_restrictions
+                    WHERE page_name = '$page'";
+            $result = mysqli_query($db_con, $query);
+            //if page doesn't exist in table, meaning every user has permission
+            if (mysqli_num_rows($result) > 0) {
+                $userType = $_SESSION['userType'];
+    
+                $query = "SELECT *
+                        FROM page_restrictions
+                        WHERE $userType = 1 AND page_name = '$page'";
+                $result = mysqli_query($db_con, $query);
+                
+                if (mysqli_num_rows($result) > 0) {
+                    $data['pageAccess'] = true;
+                } else {
+                    $data['pageAccess'] = false;
+                }
+            } else {
+                $data['pageAccess'] = true;
+            }
+        }
     } else {
         $data['logIn'] = false;        
     }
-    // } else {
-    //     $data['logIn'] = false;
-    // }
-    // $data[''] = $_SESSION;
-    // $data['login'] = $_SESSION['logIn'];
+    
 
     echo json_encode($data);
     

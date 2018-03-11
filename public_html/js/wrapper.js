@@ -51,11 +51,41 @@ function authenticateLogIn() {
         dataType: "json",
         success: function (data) {
             if (data['logIn'] == true) {
-                // console.log("Data[logIn] = true");
                 authenticated = true;
             } else if (data['logIn'] == false) {
-                // console.log("Data[logIn] = false");
                 authenticated = false;
+            }
+        },
+        error: function (msg) {
+            console.log("ERROR:");
+            console.log(msg);
+        }
+    });
+    return authenticated;
+}
+function authenticatePageAccess(page) {
+    var authenticated;
+    var dataToSend = {
+        action: 'accessPage',
+        page: page
+    }
+
+    $.ajax({
+        async: false,
+        type: 'POST',
+        url: 'http://localhost/public_html/php/authenticate_user.php',
+        data: dataToSend,
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            if (data['logIn'] == true) {
+                if (data['pageAccess'] == true) {
+                    authenticated = true;
+                } else if (data['pageAccess'] == false){
+                    authenticated = false;  
+                }
+            } else if (data['logIn'] == false) {
+                window.location.replace("index.html");
             }
         },
         error: function (msg) {
@@ -69,12 +99,16 @@ function setCurrentPage(page) {
     currentPage = page;
 }
 function loadContent(page) {
-    setCurrentPage(page);
-    $("#main").load(page + ".html"); 
+    if (authenticatePageAccess(page)) {
+        setCurrentPage(page);
+        $("#main").load(page + ".html"); 
+    } else {
+        alert("You do not have permission to access that page");
+    }
 }
-function getCurrentPage() {
-    return currentPage.trim();
-}
+// function getCurrentPage() {
+//     return currentPage.trim();
+// }
 function loadExternal(page) {
     window.open(page);
 }
