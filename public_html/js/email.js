@@ -1,39 +1,41 @@
 var recipientCheck;
-
+var recipients;
 
 function sendEmail() {
-    var recipientsRaw = document.getElementById("emailRecipients").value.trim();
-    var subject = document.getElementById("emailSubject").value.trim();
-    var subject = subject.trim();
-    var body = document.getElementById("emailBody").value.trim();
-    var body = body.trim();
-
-    // if recipients field contains a comma, separate
-    
-    console.log(" ")
-    if (checkRecipients()) {
-        var dataToSend = {
-            recipients: recipients,
-            subject: subject, 
-            body: body
-        }
-        console.log(dataToSend);
-        $.ajax({
-            type: 'POST',
-            url: 'http://localhost/public_html/php/send_email.php',
-            data: dataToSend,
-            dataType: "json",
-            success: function (data) {
-                console.log("EMAIL DATA:")
-                console.log(data);
-                //refresh page
-            },
-            error: function (msg) {
-                console.log("ERROR:");
-                console.log(msg);
+    if (checkRecipients() == false) {
+        alert("ERROR: Please check Recipient field");
+    } else {
+        var subject = document.getElementById("emailSubject").value.trim();
+        var subject = subject.trim();
+        var body = document.getElementById("emailBody").value.trim();
+        var body = body.trim();
+        
+        console.log(" ")
+        if (checkRecipients()) {
+            var dataToSend = {
+                recipients: recipients,
+                subject: subject, 
+                body: body
             }
-        });
+            console.log(dataToSend);
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost/public_html/php/send_email.php',
+                data: dataToSend,
+                dataType: "json",
+                success: function (data) {
+                    console.log("EMAIL DATA:")
+                    console.log(data);
+                    //refresh page
+                },
+                error: function (msg) {
+                    console.log("ERROR:");
+                    console.log(msg);
+                }
+            });
+        }
     }
+    
 }
 
 function checkRecipients () {
@@ -42,7 +44,7 @@ function checkRecipients () {
 
     if (recipientsRaw != "") {
         if (/,/.test(recipientsRaw)) {
-            var recipients = recipientsRaw.split(",");
+            recipients = recipientsRaw.split(",");
             for (var i = 0; i < recipients.length; i++) {
                 recipients[i] = recipients[i].trim();
                 // console.log("TESTING: \'" + recipients[i] + "\' = " + /\S+@\S+\.\S+/.test(recipients[i]));
