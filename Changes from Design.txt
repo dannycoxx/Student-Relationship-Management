@@ -14,9 +14,12 @@
 - Added permissions table in order to check if user has sufficient permissions
 
 /////////////////// SYSTEM ///////////////////
+- 
 - Redesigned log in page
-- homepage now has live search for students if logged in as non-student and goes stright to student profile if logged in as a student.
+- homepage now has live search for students if logged in as non-student and goes stright to student profile if logged in as 	a student.
 - using PHPmailer to send emails (https://github.com/PHPMailer/PHPMailer/wiki/Tutorial)
 		via mailjet as SMTP server
-- used xlsx processor 
-- lecturers cannot edit auto letters
+		https://www.liverpool.ac.uk/csd/email/unsupported/
+		
+- used xlsx processor - PHPspreadhseet package
+- lecturers do not have permission to edit auto letters
