@@ -13,7 +13,7 @@ function login() {
     document.getElementById("password").style.borderColor = "#1e1e1e";
     document.getElementById("passwordError").innerHTML = "";
 
-    var username = document.getElementById('username').value;
+    var username = document.getElementById('username').value.trim();
     var password = document.getElementById('password').value;
 
     if (username && password) {

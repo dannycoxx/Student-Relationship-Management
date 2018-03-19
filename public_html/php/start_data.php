@@ -9,10 +9,7 @@
         $query = "SELECT studentNo, mwsUser from student where studentNo = $accNo";
     } else if ($userType == 'OA' || $userType == 'SA' || $userType == 'L') {
         $query = "SELECT staffNo, mwsUser from staff where staffNo = $accNo";
-    } else {
-        //remove when get acc info works
-        exit();
-    }
+    } 
 
     $result = mysqli_query($db_con, $query);
     if (mysqli_num_rows($result) > 0) {

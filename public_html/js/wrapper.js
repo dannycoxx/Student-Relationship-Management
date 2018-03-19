@@ -4,7 +4,7 @@ var currentPage;
 
 $(document).ready(function () {
     if (authenticateLogIn()) {
-        console.log(authenticateLogIn());
+        // console.log(authenticateLogIn());
         $("#main").load("homepage.html");
         currentPage = 'homepage';
         initialiseNavDrawer();
@@ -77,7 +77,7 @@ function authenticatePageAccess(page) {
         data: dataToSend,
         dataType: "json",
         success: function (data) {
-            console.log(data);
+            // console.log(data);
             if (data['logIn'] == true) {
                 if (data['pageAccess'] == true) {
                     authenticated = true;

@@ -1,9 +1,9 @@
 function sendSearch(textBox){
     if (searchTerm != "") {
-        var searchTerm = textBox.value;
+        var searchTerm = textBox.value.trim();
         // console.log("Change: "+searchTerm);
         var dataToSend = {
-            searchTerm: textBox.value
+            searchTerm: searchTerm
             // searchTerm : "DA"
         }
         // console.log(dataToSend);

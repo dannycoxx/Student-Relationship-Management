@@ -3,11 +3,53 @@
     //NORMALISE RECIPIENTS IF NOT SEPARATED BY COMMA, REMOVE SPACES
     //MAKE SURE DATA IS ESCAPED
     use PHPMailer\PHPMailer\PHPMailer;
-
     require_once ('../php/db_config.php');
     require_once ('../php/PHPMailer/src/Exception.php');
     require_once ('../php/PHPMailer/src/PHPMailer.php');
     require_once ('../php/PHPMailer/src/SMTP.php');
+    
+    $recipients = $_POST['recipients'];
+    if(isset($_POST['subject'])) { 
+        $subject = $_POST['subject'];
+        $subjectSet = true;
+    } 
+    if(isset($_POST['body'])) { 
+        $body = $_POST['body'];   
+        $bodySet = true;
+    }
+
+    $accNo = $_SESSION['accNo'];
+    $userType = $_SESSION['userType'];
+    if ($userType == 'OA') {
+        $senderForename = 'Student';
+        $senderSurname = 'Office';
+        $senderEmail = 'studentoffice@liverpool.ac.uk';
+    } else {
+            if ($userType == 'S') {
+            $query = "SELECT forename, surname, email from student where studentNo = $accNo";
+        } else if ($userType == 'SA' || $userType == 'L') {
+            $query = "SELECT forename, surname, email from staff where staffNo = $accNo";
+        } 
+
+        $result = mysqli_query($db_con, $query);
+        if (mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_array($result);
+
+            $senderForename = $row['forename'];
+            $senderSurname = $row['surname'];
+            $senderEmail = $row['email'];
+        } else {
+            //couldn't find mwsUser in DB
+            $data['valid'] = 'false';
+            $data['message'] = 'Error getting email';
+            echo json_encode($data);
+            mysqli_close($db_con);
+            exit();  
+        }
+    }
+       
+    // Free and close query+connection
+    mysqli_free_result($result);
 
     function sendEmail() {
         $mail = new PHPMailer ();
