@@ -10,22 +10,23 @@ function sendEmail() {
         var body = document.getElementById("emailBody").value.trim();
         var body = body.trim();
         
-        console.log(" ")
+        // console.log(" ")
         if (checkRecipients()) {
             var dataToSend = {
                 recipients: recipients,
                 subject: subject, 
                 body: body
             }
-            console.log(dataToSend);
+            // console.log(dataToSend);
             $.ajax({
                 type: 'POST',
                 url: 'http://localhost/public_html/php/send_email.php',
                 data: dataToSend,
                 dataType: "json",
                 success: function (data) {
-                    console.log("EMAIL DATA:")
-                    console.log(data);
+                    location.reload();
+                    // console.log("EMAIL DATA:")
+                    // console.log(data);
                     //refresh page
                 },
                 error: function (msg) {
